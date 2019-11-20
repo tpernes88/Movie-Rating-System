@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MovieRatingSystem.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace MovieRatingSystem
 {

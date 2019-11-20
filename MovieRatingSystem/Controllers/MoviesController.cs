@@ -19,9 +19,24 @@ namespace MovieRatingSystem.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Movie.ToListAsync());
+            var movies = new List<Movie> {
+            new Movie
+            {
+                Name = "Die Hard",
+                Genre = new Genre { Name = "Action" },
+                Director = new Director { Name = "John McTiernan" },
+                Year = 1988
+            },
+            new Movie{
+                Name = "Die Hard",
+                Genre = new Genre{Name = "Action"},
+                Director = new Director{Name = "Renny Harlin"},
+                Year = 1990
+                } };
+
+            return View( movies);
         }
 
         // GET: Movies/Details/5

@@ -13,11 +13,11 @@ namespace MovieRatingSystem.Models
         {
         }
 
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Actor> Actors { get; set; }
-        public DbSet<Director> Directors { get; set; }
-        public DbSet<Genre> Genres { get; set; }
-        public DbSet<MovieActor> MovieActors { get; set; }
+        public DbSet<Movie> Movie { get; set; }
+        public DbSet<Actor> Actor { get; set; }
+        public DbSet<Director> Director { get; set; }
+        public DbSet<Genre> Genre { get; set; }
+        public DbSet<MovieActor> MovieActor { get; set; }
 
     }
 }
