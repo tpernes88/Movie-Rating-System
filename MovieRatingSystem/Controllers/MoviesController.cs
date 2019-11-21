@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieRatingSystem.Models;
+using MovieRatingSystem.ViewModels;
 
 namespace MovieRatingSystem.Controllers
 {
@@ -19,11 +20,18 @@ namespace MovieRatingSystem.Controllers
         }
 
         // GET: Movies
-        public IActionResult Index()
+        public IActionResult Index(MovieViewModel movieViewModel)
         {
-            var movies = _context.Movie.Include(m => m.Genre).ToList();
+            movieViewModel.Movies = _context.Movie.Include(m => m.Genre).ToList();
 
-            return View(movies);
+            if (movieViewModel.SearchString != null)
+            {
+                var movies = movieViewModel.Movies;
+
+                movieViewModel.Movies = movies.Where(m => m.Name.ToLower().Contains(movieViewModel.SearchString.ToLower())).ToList();
+            }
+
+            return View(movieViewModel);
         }
 
         // GET: Movies/Details/5

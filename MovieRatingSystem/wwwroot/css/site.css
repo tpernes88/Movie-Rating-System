@@ -76,11 +76,14 @@ body {
 .movie-title {
     width: 100px;
     margin: auto;
-    color: black;
 }
 
 .movie-div {
     width: 100px;
     margin-right: 40px;
     margin-top: 25px;
+}
+
+.movieNameLink{
+    color:grey;
 }
