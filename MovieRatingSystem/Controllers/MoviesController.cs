@@ -21,22 +21,9 @@ namespace MovieRatingSystem.Controllers
         // GET: Movies
         public IActionResult Index()
         {
-            var movies = new List<Movie> {
-            new Movie
-            {
-                Name = "Die Hard",
-                Genre = new Genre { Name = "Action" },
-                Director = new Director { Name = "John McTiernan" },
-                Year = 1988
-            },
-            new Movie{
-                Name = "Die Hard",
-                Genre = new Genre{Name = "Action"},
-                Director = new Director{Name = "Renny Harlin"},
-                Year = 1990
-                } };
+            var movies = _context.Movie.Include(m => m.Genre).ToList();
 
-            return View( movies);
+            return View(movies);
         }
 
         // GET: Movies/Details/5

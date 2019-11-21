@@ -5,8 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MovieRatingSystem.Models;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
+using MovieRatingSystem.Data;
 
 namespace MovieRatingSystem
 {
@@ -26,14 +25,17 @@ namespace MovieRatingSystem
 
             services.AddDbContext<MovieRatingSystemDbContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("MovieRatingSystemDbContext"), builder => builder.MigrationsAssembly("MovieRatingSystem")));
+
+            services.AddScoped<SeedingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                seedingService.Seed();
             }
             else
             {

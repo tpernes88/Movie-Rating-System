@@ -4,22 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Movie List</h1>
+<h1>Movie Dashboard</h1>
 
-<h5>@Model.Count() - Movies</h5>
-
-<div >
-    @foreach (var item in Model)
-    {
-        <div>
-            <a>
-                <img src="~/images/dieHard.jpg" width="100" alt="ASP.NET" class="img-responsive" />
-            </a>
-            <div>
-                <a><strong>@item.Name</strong></a>
+<div class="container-fluid">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-2 movie-div">
+                <a>
+                    <img src="~/images/@item.ImgCode" align="middle" width="100" alt="ASP.NET" class="img-responsive" />
+                </a>
+                <div class="movie-title" align="center">
+                    <strong>@item.Name</strong>
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 
