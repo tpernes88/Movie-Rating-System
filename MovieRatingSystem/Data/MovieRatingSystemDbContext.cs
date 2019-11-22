@@ -18,6 +18,7 @@ namespace MovieRatingSystem.Models
         public DbSet<Director> Director { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<MovieActor> MovieActor { get; set; }
+        public DbSet<Vote> Vote { get; set; }
 
     }
 }

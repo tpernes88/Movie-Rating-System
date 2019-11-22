@@ -84,6 +84,23 @@ body {
     margin-top: 25px;
 }
 
-.movieNameLink{
-    color:grey;
+.movieNameLink {
+    color: grey;
+}
+
+.backToList {
+    text-align: right;
+    vertical-align: middle;
+    margin-top: 17px;
+    margin-bottom: 17px;
+}
+
+.movieTitle {
+    text-align: left;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.hrtitle {
+    margin-top: 0px;
 }

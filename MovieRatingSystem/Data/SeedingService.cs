@@ -61,13 +61,6 @@ namespace MovieRatingSystem.Data
             m4.MoviesActors.Add(ma5);
             m5.MoviesActors.Add(ma3);
 
-            a1.MoviesActors.Add(ma1);
-            a1.MoviesActors.Add(ma2);
-            a2.MoviesActors.Add(ma3);
-            a3.MoviesActors.Add(ma4);
-            a4.MoviesActors.Add(ma5);
-            a5.MoviesActors.Add(ma3);
-
             _context.Genre.AddRange(g1, g2, g3, g4, g5);
             _context.Director.AddRange(d1, d2, d3, d4);
             _context.Actor.AddRange(a1, a2, a3, a4, a5);

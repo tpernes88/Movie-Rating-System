@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,9 @@ namespace MovieRatingSystem.Models
         public Genre Genre { get; set; }
         public string ImgCode { get; set; }
         public Director Director { get; set; }
+
+        [Display(Name = "Actors")]
         public List<MovieActor> MoviesActors { get; set; }
+        public List<Vote> Votes { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,9 +21,9 @@ namespace MovieRatingSystem.Controllers
         }
 
         // GET: Movies
-        public IActionResult Index(MovieViewModel movieViewModel)
+        public IActionResult Index(MovieIndexViewModel movieViewModel)
         {
-            movieViewModel.Movies = _context.Movie.Include(m => m.Genre).ToList();
+            movieViewModel.Movies = _context.Movie.Include(m => m.Genre).Include(m => m.Director).Include(m => m.MoviesActors).ToList();
 
             if (movieViewModel.SearchString != null)
             {
@@ -42,17 +43,30 @@ namespace MovieRatingSystem.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await _context.Movie.Include(m => m.Genre).Include(m => m.Director).Include(m => m.MoviesActors).ThenInclude(m => m.Actor).FirstOrDefaultAsync(m => m.Id == id);
+
             if (movie == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            StringBuilder movieActors = new StringBuilder();
+
+            foreach (var actor in movie.MoviesActors)
+            {
+                movieActors = movieActors.Append(actor.Actor.Name + "; ");
+            }
+
+            MovieDetailsViewModel viewModel = new MovieDetailsViewModel
+            {
+                Movie = movie,
+                ActorsString = movieActors.ToString()
+            };
+
+            return View(viewModel);
         }
 
-        // GET: Movies/Create
+        // GET: Movies/Creates
         public IActionResult Create()
         {
             return View();
