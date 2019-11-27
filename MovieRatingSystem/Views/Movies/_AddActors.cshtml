@@ -1,0 +1,20 @@
+﻿@model MovieRatingSystem.ViewModels.MovieFormViewModel
+
+<div class="form-group">
+    <label asp-for="ActorId" class="control-label"></label>
+    <input asp-for="Actors" class="form-control" id="actorField" />
+    <div class="form-group">
+        <a class="btn btn-primary" id="clearBox">Add Actor</a>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $("#clearBox").click(clear);
+
+        function clear() {
+            alert('pim');
+            $("#actorField").value = "";
+        }
+    </script>
+}

@@ -18,7 +18,7 @@
         <img src="~/images/@Model.Movie.ImgCode" align="middle" alt="ASP.NET" class="img-responsive" />
     </div>
     <div class="col-sm-5">
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+        @await Html.PartialAsync("_Rating")
     </div>
     <div class="col-sm-4">
         <dl class="row">
@@ -44,7 +44,7 @@
                 @Html.DisplayNameFor(model => model.Movie.MoviesActors):
             </dt>
             <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.ActorsString);
+                @Html.DisplayFor(model => model.ActorsString)
             </dd>
         </dl>
     </div>
@@ -52,8 +52,7 @@
 <hr />
 <div class="row">
     <div class="col-sm-12">
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+        @Html.DisplayFor(model => model.Movie.Description)
     </div>
 </div>
 

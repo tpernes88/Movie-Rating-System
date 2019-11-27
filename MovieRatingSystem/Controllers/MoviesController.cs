@@ -50,17 +50,12 @@ namespace MovieRatingSystem.Controllers
                 return NotFound();
             }
 
-            StringBuilder movieActors = new StringBuilder();
-
-            foreach (var actor in movie.MoviesActors)
-            {
-                movieActors = movieActors.Append(actor.Actor.Name + "; ");
-            }
+            var concat = String.Join(';',movie.MoviesActors.Select( a => a.Actor.Name).ToArray());
 
             MovieDetailsViewModel viewModel = new MovieDetailsViewModel
             {
                 Movie = movie,
-                ActorsString = movieActors.ToString()
+                ActorsString = concat
             };
 
             return View(viewModel);
@@ -69,7 +64,14 @@ namespace MovieRatingSystem.Controllers
         // GET: Movies/Creates
         public IActionResult Create()
         {
-            return View();
+            var genres = _context.Genre.ToList();
+
+            MovieFormViewModel viewModel = new MovieFormViewModel
+            {
+                Genres = genres
+            };
+
+            return View(viewModel);
         }
 
         // POST: Movies/Create

@@ -30,10 +30,10 @@ namespace MovieRatingSystem.Data
             Genre g4 = new Genre { Name = "Documentary" };
             Genre g5 = new Genre { Name = "Sci-Fi" };
 
-            Director d1 = new Director { Name = "John McTiernan"};
-            Director d2 = new Director { Name = "Renny Harlin"};
-            Director d3 = new Director { Name = "Steven Spielberg"};
-            Director d4 = new Director { Name = "Frank Darabont"};
+            Director d1 = new Director { Name = "John McTiernan" };
+            Director d2 = new Director { Name = "Renny Harlin" };
+            Director d3 = new Director { Name = "Steven Spielberg" };
+            Director d4 = new Director { Name = "Frank Darabont" };
 
             Actor a1 = new Actor { Name = "Bruce Willis", MoviesActors = new List<MovieActor>() };
             Actor a2 = new Actor { Name = "Morgan Freeman", MoviesActors = new List<MovieActor>() };
@@ -41,11 +41,56 @@ namespace MovieRatingSystem.Data
             Actor a4 = new Actor { Name = "Ben Kingsley", MoviesActors = new List<MovieActor>() };
             Actor a5 = new Actor { Name = "Richard Attenborough", MoviesActors = new List<MovieActor>() };
 
-            Movie m1 = new Movie { Name = "Die Hard", Year = 1988, Genre = g1, Director = d1, ImgCode = "dieHard.jpg", MoviesActors = new List<MovieActor>() };
-            Movie m2 = new Movie { Name = "Die Hard2", Year = 1990, Genre = g1, Director = d2, ImgCode = "dieHard2.jpg", MoviesActors = new List<MovieActor>() };
-            Movie m3 = new Movie { Name = "Jurassic Park", Year = 1993, Genre = g5, Director = d3, ImgCode = "jurassicPark.jpg", MoviesActors = new List<MovieActor>() };
-            Movie m4 = new Movie { Name = "Schindler's List", Year = 1993, Genre = g2, Director = d3, ImgCode = "schindlersList.jpg", MoviesActors = new List<MovieActor>() };
-            Movie m5 = new Movie { Name = "The Shawshank Redemption", Year = 1994, Genre = g2, Director = d4, ImgCode = "shawshank.jpg", MoviesActors = new List<MovieActor>() };
+            Movie m1 = new Movie
+            {
+                Name = "Die Hard",
+                Year = 1988,
+                Genre = g1,
+                Director = d1,
+                ImgCode = "dieHard.jpg",
+                MoviesActors = new List<MovieActor>(),
+                Description = "An NYPD officer tries to save his wife and several others taken hostage by German terrorists during a Christmas party at the Nakatomi Plaza in Los Angeles."
+            };
+            Movie m2 = new Movie
+            {
+                Name = "Die Hard2",
+                Year = 1990,
+                Genre = g1,
+                Director = d2,
+                ImgCode = "dieHard2.jpg",
+                MoviesActors = new List<MovieActor>(),
+                Description = "John McClane attempts to avert disaster as rogue military operatives seize control of Dulles International Airport in Washington, D.C."
+            };
+            Movie m3 = new Movie
+            {
+                Name = "Jurassic Park",
+                Year = 1993,
+                Genre = g5,
+                Director = d3,
+                ImgCode = "jurassicPark.jpg",
+                MoviesActors = new List<MovieActor>(),
+                Description = "A pragmatic Paleontologist visiting an almost complete theme park is tasked with protecting a couple of kids after a power failure causes the park's cloned dinosaurs to run loose."
+            };
+            Movie m4 = new Movie
+            {
+                Name = "Schindler's List",
+                Year = 1993,
+                Genre = g2,
+                Director = d3,
+                ImgCode = "schindlersList.jpg",
+                MoviesActors = new List<MovieActor>(),
+                Description = "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis."
+            };
+            Movie m5 = new Movie
+            {
+                Name = "The Shawshank Redemption",
+                Year = 1994,
+                Genre = g2,
+                Director = d4,
+                ImgCode = "shawshank.jpg",
+                MoviesActors = new List<MovieActor>(),
+                Description = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
+            };
 
             MovieActor ma1 = new MovieActor { Actor = a1, Movie = m1 };
             MovieActor ma2 = new MovieActor { Actor = a1, Movie = m2 };

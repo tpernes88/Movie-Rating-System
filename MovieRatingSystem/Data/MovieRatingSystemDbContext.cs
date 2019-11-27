@@ -12,13 +12,12 @@ namespace MovieRatingSystem.Models
             : base(options)
         {
         }
-
         public DbSet<Movie> Movie { get; set; }
         public DbSet<Actor> Actor { get; set; }
         public DbSet<Director> Director { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<MovieActor> MovieActor { get; set; }
-        public DbSet<Vote> Vote { get; set; }
+        public DbSet<Rating> Vote { get; set; }
 
     }
 }
