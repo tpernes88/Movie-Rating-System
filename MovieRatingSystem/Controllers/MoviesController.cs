@@ -79,15 +79,32 @@ namespace MovieRatingSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Year,ImgCode")] Movie movie)
+        public async Task<IActionResult> Create(MovieFormViewModel movieViewModel)
         {
             if (ModelState.IsValid)
             {
+                Movie movie = new Movie();
+
+                var movieInDb = _context.Movie.SingleOrDefault(m => m.Name.ToLower().Trim() == movieViewModel.Name.ToLower().Trim());
+
+                if (movieInDb != null)
+                {
+                    return RedirectToAction("Details", new { id = movieInDb.Id});
+                }
+
+
+                var directors = _context.Director.ToList();
+                var actors = _context.Actor.ToList();
+                
+                
+              
+
+
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View();
         }
 
         // GET: Movies/Edit/5
@@ -173,6 +190,15 @@ namespace MovieRatingSystem.Controllers
         private bool MovieExists(int id)
         {
             return _context.Movie.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> AddActorToList(MovieFormViewModel movieView)
+        {
+            movieView.Actors.Add(movieView.Actor);
+            
+
+
+            return PartialView("_AddActor", movieView);
         }
     }
 }

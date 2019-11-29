@@ -16,7 +16,12 @@ namespace MovieRatingSystem.Models
 
         [Required]
         public int Year { get; set; }
+
         public Genre Genre { get; set; }
+
+        [Required]
+        [Display(Name = "Genre")]
+        public int GenreId { get; set; }
 
         [Required]
         public string ImgCode { get; set; }

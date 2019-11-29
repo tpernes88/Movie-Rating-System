@@ -27,13 +27,10 @@
                 <select asp-for="GenreId" asp-items="@(new SelectList(Model.Genres,"Id","Name"))" class="form-control"><option value="" selected="">Select a Movie Genre</option></select>
                 <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="director">
                 <label asp-for="Director" class="control-label"></label>
-                <input asp-for="Director" class="form-control" />
-                <span asp-validation-for="Director" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-
+                <input asp-for="Director.Name" class="form-control" />
+                <span asp-validation-for="Director.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -45,15 +42,11 @@
                 <input asp-for="ImgCode" class="form-control" />
                 <span asp-validation-for="ImgCode" class="text-danger"></span>
             </div>
+            @await Html.PartialAsync("_AddActor",Model)
             <div class="form-group">
-                <label asp-for="ActorId" class="control-label"></label>
-                <input asp-for="Actors" class="form-control" id="actorField" />
-                <div class="form-group">
-                    <a class="btn btn-primary" id="clearBox">Add Actor</a>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                @Html.HiddenFor(m => m.Id)
+                @Html.AntiForgeryToken()
+                <input type="submit" value="Create" id="createmovie" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -67,10 +60,39 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        $("#clearBox").click(clear);
 
-        function clear() {
-            $("#actorField").val("");
-        }
+        var actorCounter = 0;
+
+        $("#addActor").click(function () {
+
+            //var actorvalue = "actorField_" + actorCounter;
+
+            //actorlist.append(actorlist, document.getElementById(actorvalue).val);
+            //ActorsNameList = ActorsNameList + ";" + document.getElementById(actorvalue).val;
+
+            actorCounter++;
+
+            var newelement = "<input class=\"form-control actor\" asp-for =\"ActorsNameList[" + actorCounter + "]\" id=\"actorField_" + actorCounter + "\" />";
+
+            $("#actorcontainer").append(newelement);
+        });
     </script>
+    @*<script>
+
+        $("#createmovie").click(function () {
+            var vm = {
+                actorlist = []
+            };
+
+            $("#actorcontainer").children("input").each(function () {
+                alert($(this).val);
+                actorlist.push($(this).val);
+            });
+
+            @Model.ActorsNameList.AddRange(vm.actorlist)
+
+        });
+    </script>*@
+
+
 }
