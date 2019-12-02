@@ -14,35 +14,43 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" id="name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
+                <input asp-for="Year" class="form-control" id="year" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.GenreId"></label>
-                <select asp-for="GenreId" asp-items="@(new SelectList(Model.Genres,"Id","Name"))" class="form-control"><option value="" selected="">Select a Movie Genre</option></select>
+                <select asp-for="GenreId" asp-items="@(new SelectList(Model.Genres,"Id","Name"))" class="form-control" id="genre"><option value="" selected="">Select a Movie Genre</option></select>
                 <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
             <div class="form-group" id="director">
                 <label asp-for="Director" class="control-label"></label>
-                <input asp-for="Director.Name" class="form-control" />
+                <input asp-for="Director.Name" class="form-control" id="director" />
                 <span asp-validation-for="Director.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <input asp-for="Description" class="form-control" id="description" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImgCode" class="control-label"></label>
-                <input asp-for="ImgCode" class="form-control" />
+                <input asp-for="ImgCode" class="form-control" id="imgcode" />
                 <span asp-validation-for="ImgCode" class="text-danger"></span>
             </div>
-            @await Html.PartialAsync("_AddActor",Model)
+            <div class="form-group" id="actorcontainer">
+                <label asp-for="Actor" class="control-label"></label>
+                <input class="form-control" id="actorname" />
+                <select asp-for="ActorsName" class="form-control" id="actors">
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-info" id="addActor">Add Actor</button>
+            </div>
             <div class="form-group">
                 @Html.HiddenFor(m => m.Id)
                 @Html.AntiForgeryToken()
@@ -61,38 +69,51 @@
 
     <script>
 
-        var actorCounter = 0;
+        var actorList = [];
+
+        var movieDetails = {
+            Name: $("#name").val(),
+            Year: $("#year").val(),
+            GenreId: $("#genre").val(),
+            Director: [{ Name: $("#director").val() }],
+            Description: $("#description").val(),
+            ImgCode: $("#imgcode").val(),
+            ActorsName: actorList
+        };
 
         $("#addActor").click(function () {
 
-            //var actorvalue = "actorField_" + actorCounter;
+            var actor = document.getElementById("actorname").value;
 
-            //actorlist.append(actorlist, document.getElementById(actorvalue).val);
-            //ActorsNameList = ActorsNameList + ";" + document.getElementById(actorvalue).val;
+            actorList.push(actor);
 
-            actorCounter++;
+            alert($("#genre").val());
 
-            var newelement = "<input class=\"form-control actor\" asp-for =\"ActorsNameList[" + actorCounter + "]\" id=\"actorField_" + actorCounter + "\" />";
+            var newelement = "<option> " + actor + "</option > ";
 
-            $("#actorcontainer").append(newelement);
+            $("#actors").append(newelement);
+
+            $("#actorname").val("");
+        });
+
+        $("#createmovie").click(function (){
+            $.ajax({
+                type: "POST",
+                traditional: true,
+                url: "@Url.Action("Create", "Movies")",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(movieDetails),
+                success: function () {
+                    alert("Success!");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (debug) {
+                        alert(XMLHttpRequest.responseText);
+                        alert(textStatus);
+                        alert(errorThrown);
+                    }
+                }
+            })
         });
     </script>
-    @*<script>
-
-        $("#createmovie").click(function () {
-            var vm = {
-                actorlist = []
-            };
-
-            $("#actorcontainer").children("input").each(function () {
-                alert($(this).val);
-                actorlist.push($(this).val);
-            });
-
-            @Model.ActorsNameList.AddRange(vm.actorlist)
-
-        });
-    </script>*@
-
-
 }

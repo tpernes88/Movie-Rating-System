@@ -36,6 +36,8 @@ namespace MovieRatingSystem.ViewModels
         public string Description { get; set; }
 
         public Actor Actor { get; set; }
-        public List<Actor> Actors { get; set; }
+
+        [Display(Name = "Actors")]
+        public List<String> ActorsName { get; set; }
     }
 }

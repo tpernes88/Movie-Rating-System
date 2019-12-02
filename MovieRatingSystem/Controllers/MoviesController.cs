@@ -50,7 +50,7 @@ namespace MovieRatingSystem.Controllers
                 return NotFound();
             }
 
-            var concat = String.Join(';',movie.MoviesActors.Select( a => a.Actor.Name).ToArray());
+            var concat = String.Join(';', movie.MoviesActors.Select(a => a.Actor.Name).ToArray());
 
             MovieDetailsViewModel viewModel = new MovieDetailsViewModel
             {
@@ -89,16 +89,12 @@ namespace MovieRatingSystem.Controllers
 
                 if (movieInDb != null)
                 {
-                    return RedirectToAction("Details", new { id = movieInDb.Id});
+                    return RedirectToAction("Details", new { id = movieInDb.Id });
                 }
 
 
                 var directors = _context.Director.ToList();
                 var actors = _context.Actor.ToList();
-                
-                
-              
-
 
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
@@ -190,15 +186,6 @@ namespace MovieRatingSystem.Controllers
         private bool MovieExists(int id)
         {
             return _context.Movie.Any(e => e.Id == id);
-        }
-
-        public async Task<IActionResult> AddActorToList(MovieFormViewModel movieView)
-        {
-            movieView.Actors.Add(movieView.Actor);
-            
-
-
-            return PartialView("_AddActor", movieView);
         }
     }
 }
