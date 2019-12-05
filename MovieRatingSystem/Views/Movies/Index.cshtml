@@ -1,20 +1,26 @@
-﻿@model MovieRatingSystem.ViewModels.MovieIndexViewModel
+﻿@model MovieRatingSystem.ViewModels.Requests.MovieIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Movie Dashboard</h1>
-
+<div class="row rowtitle">
+    <div class="col-sm-10 movieTitle">
+        <h1>Movie Dashboard</h1>
+    </div>
+    <div class="col-sm-2 backToList">
+        <input type="button" class="btn btn-secondary" value="Back to Dashboard" onclick="window.location='@Url.Action("Index", "Movies")'" />
+    </div>
+</div>
 <div class="container-fluid">
     <form asp-page="/Index" method="get" class="">
-        <div class="form-group">
-            <p>
-                Find by name:
-                <input type="text" name="SearchString" value="@Model.SearchString" />
-                <input type="submit" value="Search" class="btn btn-primary" asp-page="/Index"/> |
-                <a asp-page="/Index">Back to full List</a>
-            </p>
+        <div class="form-row">
+            <input type="text" placeholder="Seatch by Name" name="SearchString" value="@Model.SearchString" />
+
+            <div class="btn-group btn-group-justified">
+                <input type="submit" value="Search" class="btn btn-primary" asp-page="/Index" />
+                <input type="button" class="btn btn-primary" value="New Movie" onclick="window.location='@Url.Action("Create", "Movies")'" />
+            </div>
         </div>
     </form>
     <div class="row">

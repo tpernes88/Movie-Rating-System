@@ -1,24 +1,25 @@
-﻿using System;
+﻿using MovieRatingSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieRatingSystem.Models
+namespace MovieRatingSystem.ViewModels.Requests
 {
-    public class Movie
+    public class MovieFormViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
 
         [Required]
-        [RegularExpression(@"\d{4}", ErrorMessage = "Please insert a valid year.")]
+        [RegularExpression(@"\d{4}", ErrorMessage ="Please insert a valid year.")]
         public int Year { get; set; }
 
-        public Genre Genre { get; set; }
+        public IEnumerable<Genre> Genres { get; set; }
 
         [Required]
         [Display(Name = "Genre")]
@@ -34,7 +35,6 @@ namespace MovieRatingSystem.Models
         [Required]
         public string Description { get; set; }
 
-        [Display(Name = "Actors")]
-        public List<MovieActor> MoviesActors { get; set; }
+        public List<String> Actors { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MovieRatingSystem.Models;
 
-namespace MovieRatingSystem.ViewModels
+namespace MovieRatingSystem.ViewModels.Requests
 {
     public class MovieDetailsViewModel
     {

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieRatingSystem.Models;
-using MovieRatingSystem.ViewModels;
+using MovieRatingSystem.ViewModels.Requests;
+using MovieRatingSystem.ViewModels.Responses;
 
 namespace MovieRatingSystem.Controllers
 {
@@ -50,7 +49,7 @@ namespace MovieRatingSystem.Controllers
                 return NotFound();
             }
 
-            var concat = String.Join(';', movie.MoviesActors.Select(a => a.Actor.Name).ToArray());
+            var concat = String.Join("; ", movie.MoviesActors.Select(a => a.Actor.Name).ToArray());
 
             MovieDetailsViewModel viewModel = new MovieDetailsViewModel
             {
@@ -68,7 +67,7 @@ namespace MovieRatingSystem.Controllers
 
             MovieFormViewModel viewModel = new MovieFormViewModel
             {
-                Genres = genres
+                Genres = genres,
             };
 
             return View(viewModel);
@@ -79,22 +78,54 @@ namespace MovieRatingSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(MovieFormViewModel movieViewModel)
+        public async Task<IActionResult> Create(CreateMovieResponse movieResponseViewModel)
         {
             if (ModelState.IsValid)
             {
                 Movie movie = new Movie();
 
-                var movieInDb = _context.Movie.SingleOrDefault(m => m.Name.ToLower().Trim() == movieViewModel.Name.ToLower().Trim());
+                var movieInDb = _context.Movie.SingleOrDefault(m => m.Name.ToLower().Trim() == movieResponseViewModel.Name.ToLower().Trim());
 
                 if (movieInDb != null)
                 {
                     return RedirectToAction("Details", new { id = movieInDb.Id });
                 }
 
+                movie.Name = movieResponseViewModel.Name;
+                movie.GenreId = movieResponseViewModel.GenreId;
+                movie.Description = movieResponseViewModel.Description;
+                movie.ImgCode = movieResponseViewModel.ImgCode;
+                movie.Year = movieResponseViewModel.Year;
+                movie.MoviesActors = new List<MovieActor>();
 
-                var directors = _context.Director.ToList();
-                var actors = _context.Actor.ToList();
+                var director = _context.Director.FirstOrDefault(d => d.Name == movieResponseViewModel.Director.Name);
+
+                if (director == null)
+                {
+                    movie.Director = new Director
+                    {
+                        Name = movieResponseViewModel.Director.Name
+                    };
+                }
+                else
+                {
+                    movie.Director = director;
+                }
+
+                var actors = _context.Actor.Where(a => movieResponseViewModel.Actors.Contains(a.Name)).Select(a=>a.Name).ToList();
+
+                if (actors.Count > 0)
+                if (actors.Count > 0)
+                {
+                    foreach (var act in movieResponseViewModel.Actors)
+                    {
+                        //if (actors.Contains())
+                        //{
+
+                        //}
+                    }
+                }
+
 
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
@@ -111,12 +142,28 @@ namespace MovieRatingSystem.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie.FindAsync(id);
+            var movie = await _context.Movie.Include(m => m.Director).Include(m => m.MoviesActors).ThenInclude(m => m.Actor).SingleOrDefaultAsync(m => m.Id == id);
+
+            var genres = await _context.Genre.ToListAsync();
+
             if (movie == null)
             {
                 return NotFound();
             }
-            return View(movie);
+
+            var viewModel = new EditMovieViewModel
+            {
+                Genres = genres,
+                Name = movie.Name,
+                Year = movie.Year,
+                GenreId = movie.GenreId,
+                Director = movie.Director,
+                Description = movie.Description,
+                ImgCode = movie.ImgCode,
+                MoviesActors = movie.MoviesActors
+            };
+
+            return View(viewModel);
         }
 
         // POST: Movies/Edit/5
@@ -124,7 +171,7 @@ namespace MovieRatingSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Year,ImgCode")] Movie movie)
+        public async Task<IActionResult> Edit(int id, Movie movie)
         {
             if (id != movie.Id)
             {
@@ -164,6 +211,7 @@ namespace MovieRatingSystem.Controllers
 
             var movie = await _context.Movie
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (movie == null)
             {
                 return NotFound();

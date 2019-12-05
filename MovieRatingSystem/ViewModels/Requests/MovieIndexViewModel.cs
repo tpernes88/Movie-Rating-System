@@ -1,7 +1,7 @@
 ﻿using MovieRatingSystem.Models;
 using System.Collections.Generic;
 
-namespace MovieRatingSystem.ViewModels
+namespace MovieRatingSystem.ViewModels.Requests
 {
     public class MovieIndexViewModel
     {

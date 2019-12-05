@@ -1,14 +1,22 @@
-﻿@model MovieRatingSystem.Models.Movie
+﻿@model MovieRatingSystem.ViewModels.Requests.EditMovieViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Movie</h4>
+<div class="row rowtitle">
+    <div class="col-sm-10 movieTitle">
+        <h1>Edit - @Model.Name</h1>
+    </div>
+    <div class="col-sm-2 backToList">
+        <input type="button" class="btn btn-secondary" value="Back to Dashboard" onclick="window.location='@Url.Action("Index", "Movies")'" />
+    </div>
+</div>
 <hr />
 <div class="row">
+    <div class="col-md-4">
+        <img src="~/images/@Model.ImgCode" align="middle" alt="ASP.NET" class="img-responsive" />
+    </div>
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -24,9 +32,32 @@
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Director" class="control-label"></label>
+                <input asp-for="Director.Name" class="form-control" />
+                <span asp-validation-for="Director.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GenreId"></label>
+                <select asp-for="GenreId" asp-items="@(new SelectList(Model.Genres,"Id","Name"))" class="form-control" id="genre"><option value="" selected="">Select a Movie Genre</option></select>
+                <span asp-validation-for="GenreId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ImgCode" class="control-label"></label>
                 <input asp-for="ImgCode" class="form-control" />
                 <span asp-validation-for="ImgCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoviesActors" class="control-label"></label>
+                @foreach (var m in Model.MoviesActors)
+                {
+                    <input asp-for="@m.Actor.Name" class="form-control" />
+                    <span asp-validation-for="@m.Actor.Name" class="text-danger"></span>
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control textdescription" id="textdescription"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -35,10 +66,15 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function auto_grow() {
+            var textarea = document.getElementById("textdescription");
+            textarea.style.height = "5px";
+            textarea.style.height = (textarea.scrollHeight) + "px";
+        });
+    </script>
+
 }

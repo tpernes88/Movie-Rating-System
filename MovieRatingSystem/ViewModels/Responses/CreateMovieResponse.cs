@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MovieRatingSystem.ViewModels
+namespace MovieRatingSystem.ViewModels.Responses
 {
-    public class MovieFormViewModel
+    public class CreateMovieResponse
     {
         public int? Id { get; set; }
 
@@ -16,10 +16,8 @@ namespace MovieRatingSystem.ViewModels
         public string Name { get; set; }
 
         [Required]
-        [RegularExpression(@"\d{4}", ErrorMessage ="Please insert a valid year.")]
+        [RegularExpression(@"\d{4}", ErrorMessage = "Please insert a valid year.")]
         public int Year { get; set; }
-
-        public IEnumerable<Genre> Genres { get; set; }
 
         [Required]
         [Display(Name = "Genre")]
@@ -35,9 +33,7 @@ namespace MovieRatingSystem.ViewModels
         [Required]
         public string Description { get; set; }
 
-        public Actor Actor { get; set; }
-
         [Display(Name = "Actors")]
-        public List<String> ActorsName { get; set; }
+        public List<String> Actors { get; set; }
     }
 }

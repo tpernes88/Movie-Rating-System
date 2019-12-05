@@ -1,4 +1,4 @@
-﻿@model MovieRatingSystem.ViewModels.MovieDetailsViewModel
+﻿@model MovieRatingSystem.ViewModels.Requests.MovieDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -9,7 +9,7 @@
         <h1>@Model.Movie.Name</h1>
     </div>
     <div class="col-sm-2 backToList">
-        <a asp-action="Index">Back to List</a>
+        <input type="button" class="btn btn-secondary" value="Back to Dashboard" onclick="window.location='@Url.Action("Index", "Movies")'" />
     </div>
 </div>
 <hr class="hrtitle" />
@@ -18,7 +18,7 @@
         <img src="~/images/@Model.Movie.ImgCode" align="middle" alt="ASP.NET" class="img-responsive" />
     </div>
     <div class="col-sm-5">
-        @await Html.PartialAsync("_Rating")
+        
     </div>
     <div class="col-sm-4">
         <dl class="row">
@@ -47,6 +47,10 @@
                 @Html.DisplayFor(model => model.ActorsString)
             </dd>
         </dl>
+        <div class="btn-group-vertical">
+            <input type="button" class="btn btn-outline-dark" value="Edit Movie" onclick="window.location='@Url.Action("Edit", "Movies", new {id=Model.Movie.Id })'" />
+            <input type="button" class="btn btn-outline-dark" value="Delete Movie" onclick="window.location='@Url.Action("Delete", "Movies",  new {id=Model.Movie.Id })'" />
+        </div>
     </div>
 </div>
 <hr />
